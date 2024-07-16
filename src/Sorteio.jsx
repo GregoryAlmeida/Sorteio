@@ -9,14 +9,22 @@ export default function Sorteio() {
   const handleClick = () => {
     if (input.trim() != '') {
       setId(id + 1);
-      setItem([...item, { id: id, item: input }]);
+      setItem([...item, input]);
 
       setInput('');
     }
   };
 
-  const handleSortear = () =>
-    setModal(item[Math.floor(Math.random() * item.length)].item);
+  const handleSortear = () => {
+    const interval = setInterval(
+      () => setModal(item[Math.floor(Math.random() * item.length)]),
+      1,
+    );
+
+    setTimeout(() => {
+      clearInterval(interval);
+    }, 2000);
+  };
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
@@ -27,6 +35,7 @@ export default function Sorteio() {
           placeholder="Sorteando..."
           onChange={({ target }) => setInput(target.value)}
         />
+        <p>Escreva aqui as opções a serem sorteadas⤴</p>
         <button onClick={handleClick}>Adicionar</button>
       </div>
       <div className="div-result">
@@ -44,9 +53,20 @@ export default function Sorteio() {
           </div>
         )}
 
-        {item.map(({ id, item }) => (
-          <p className="p-item" key={id}>
-            {item}
+        {item.map((name) => (
+          <p className="p-item" key={Math.random()}>
+            {name}
+            <button
+              onClick={() => {
+                item.splice(item.indexOf(name), 1);
+                setInput(input + ' ');
+                setTimeout(() => {
+                  setInput('');
+                });
+              }}
+            >
+              X
+            </button>
           </p>
         ))}
       </div>
