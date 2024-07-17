@@ -76,9 +76,13 @@ export default function Sorteio() {
               />
               <button
                 onClick={() => {
-                  if (optItem.trim() != '' && optItem <= 1000) {
-                    handleAddNumber(optItem);
-                    setOptItem('');
+                  if (optItem.trim() != '') {
+                    if (optItem <= 1000) {
+                      setOptItem('');
+                      handleAddNumber(optItem);
+                    } else {
+                      alert('Número deve ser menor ou igual a 1000!');
+                    }
                   }
                 }}
               >
