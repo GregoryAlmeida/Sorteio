@@ -4,6 +4,11 @@
   margin: 0;
 }
 
+html {
+  background-image: linear-gradient(45deg,#32ff7e,#7efff5);
+
+}
+
 body {
   font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
   background-image: linear-gradient(45deg,#32ff7e,#7efff5);
@@ -11,8 +16,10 @@ body {
 
   overflow-x: hidden;
 
-  width: 100vw;
+  min-width: 100vw;
   min-height: 100vh;
+
+  flex-wrap: wrap;
 }
 
 section {
@@ -49,7 +56,7 @@ form {
 
 }
 
-.div-input {
+.div-main {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
@@ -59,7 +66,42 @@ form {
 
   min-height: 10rem;
   width: 30rem;
+  position: relative;
+  flex-wrap: wrap;
 
+
+
+  .div-input {
+    display: flex;
+    position: relative;
+
+
+    div {
+      display: flex;
+      margin-left: 1rem;
+
+      span {
+
+        font-size: 2rem;
+        cursor: pointer;
+    
+        background-color: #1e272e;
+  
+        color: #32ff7e;
+  
+        height: 3rem;
+        align-items: center;
+        clip-path: circle();
+        margin: auto;
+
+
+      }
+      span:hover {
+        animation: spinner 1s;
+
+      }
+    }
+  }
   input, button {
     border: 2px solid #3ae374;
     border-radius: 5px;
@@ -207,34 +249,38 @@ form {
   display: flex;
 }
 
-.div {
-  display: flex;
-  div {
-    animation: animeEtc 0.5s ease-in;
-    animation-iteration-count: infinite;
-    background-color: white;
-    height: 5px;
-    width: 5px;
-    position: relative;
-    align-items: center;
-    margin-left: 0.5rem;
-    margin-top: auto;
-    margin-bottom: 0.5rem;
-  
+@keyframes spinner {
+  from {
+    transform: rotate(0deg)
+  }
+  to {
+    transform: rotate(360deg)
   }
 }
 
+.section-options-input{
+  position: absolute;
+  font-size: 1rem;
 
-@keyframes animeEtc {
-  from {
-    height: 5px;
-  }
+  right: -25rem;
+}
 
-  25% {
-    height: 7px;
-  }
-
-  to {
-    height: 5px;
-  }
+/* HTML: <div class="loader"></div> */
+.loader {
+  margin-left: 0.5rem;
+  width: 20px;
+  aspect-ratio: 2;
+  --_g: no-repeat radial-gradient(circle closest-side,#fff 90%,#0000);
+  background: 
+    var(--_g) 0%   50%,
+    var(--_g) 50%  50%,
+    var(--_g) 100% 50%;
+  background-size: calc(100%/3) 50%;
+  animation: l3 1s infinite linear;
+}
+@keyframes l3 {
+    20%{background-position:0%   0%, 50%  50%,100%  50%}
+    40%{background-position:0% 100%, 50%   0%,100%  50%}
+    60%{background-position:0%  50%, 50% 100%,100%   0%}
+    80%{background-position:0%  50%, 50%  50%,100% 100%}
 }

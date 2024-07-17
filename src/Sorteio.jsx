@@ -5,6 +5,7 @@ export default function Sorteio() {
   const [item, setItem] = useState([]);
   const [id, setId] = useState(0);
   const [modal, setModal] = useState(false);
+  const [optItem, setOptItem] = useState(false);
 
   const handleClick = () => {
     if (input.trim() != '') {
@@ -48,13 +49,44 @@ export default function Sorteio() {
 
   return (
     <form onSubmit={(e) => e.preventDefault()}>
-      <div className="div-input">
-        <input
-          type="text"
-          value={input}
-          placeholder="Sorteando..."
-          onChange={({ target }) => setInput(target.value)}
-        />
+      <div className="div-main">
+        <div className="div-input">
+          <input
+            type="text"
+            value={input}
+            placeholder="Sorteando..."
+            onChange={({ target }) => setInput(target.value)}
+          />
+          <div>
+            <span
+              onClick={() => {
+                setOptItem(!optItem);
+              }}
+            >
+              &#9881;
+            </span>
+          </div>
+          {optItem && (
+            <section className="section-options-input">
+              <input
+                type="Number"
+                value={optItem}
+                placeholder="Número personalizado"
+                onChange={({ target }) => setOptItem(target.value)}
+              />
+              <button
+                onClick={() => {
+                  if (optItem.trim() != '' && optItem <= 1000) {
+                    handleAddNumber(optItem);
+                    setOptItem('');
+                  }
+                }}
+              >
+                Adicionar
+              </button>
+            </section>
+          )}
+        </div>
         <p>Escreva aqui as opções a serem sorteadas⤴</p>
         <button onClick={handleClick}>Adicionar</button>
         {item.length === 0 && (
@@ -102,13 +134,7 @@ export default function Sorteio() {
         <div className="modal">
           <h1 className="h1-anime">
             {modal.title}
-            {modal.etc && (
-              <div className="div">
-                <div></div>
-                <div></div>
-                <div></div>
-              </div>
-            )}
+            {modal.etc && <div class="loader"></div>}
           </h1>
           <h1>
             <strong>{modal.result}</strong>
