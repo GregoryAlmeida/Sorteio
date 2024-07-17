@@ -15,13 +15,33 @@ export default function Sorteio() {
     }
   };
 
+  const handleAddNumber = (number) => {
+    for (let c = 1; c <= number; c++) {
+      item.push(c);
+      setInput(input + ' ');
+      setTimeout(() => {
+        setInput('');
+      });
+    }
+  };
+
   const handleSortear = () => {
     const interval = setInterval(
-      () => setModal(item[Math.floor(Math.random() * item.length)]),
+      () =>
+        setModal({
+          title: 'Sorteando',
+          etc: '...',
+          result: item[Math.floor(Math.random() * item.length)],
+        }),
       1,
     );
 
     setTimeout(() => {
+      setModal({
+        title: 'Vencedor é:',
+        etc: false,
+        result: item[Math.floor(Math.random() * item.length)],
+      });
       clearInterval(interval);
     }, 2000);
   };
@@ -37,6 +57,14 @@ export default function Sorteio() {
         />
         <p>Escreva aqui as opções a serem sorteadas⤴</p>
         <button onClick={handleClick}>Adicionar</button>
+        {item.length === 0 && (
+          <div>
+            <p>Ou use as opções abaixo:</p>
+            <button onClick={() => handleAddNumber(5)}>1 a 5</button>
+            <button onClick={() => handleAddNumber(10)}>1 a 10</button>
+            <button onClick={() => handleAddNumber(100)}>1 a 100</button>
+          </div>
+        )}
       </div>
       <div className="div-result">
         {item.length > 1 && (
@@ -72,10 +100,20 @@ export default function Sorteio() {
       </div>
       {modal && (
         <div className="modal">
-          <h1>Vencedor é:</h1>
-          <h1>
-            <strong>{modal}</strong>
+          <h1 className="h1-anime">
+            {modal.title}
+            {modal.etc && (
+              <div className="div">
+                <div></div>
+                <div></div>
+                <div></div>
+              </div>
+            )}
           </h1>
+          <h1>
+            <strong>{modal.result}</strong>
+          </h1>
+
           <button onClick={() => setModal(false)}>Fechar</button>
         </div>
       )}
